@@ -11,7 +11,7 @@ config.gypi
 CVS
 npm-debug.log
 coverage/
-examples/
+example/
 scripts/
 test/
 .vscode
