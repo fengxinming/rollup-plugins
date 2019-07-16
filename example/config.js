@@ -1,10 +1,13 @@
 'use strict';
 
-const { resolve: pathResolve } = require('path');
+const { readdirSync } = require('fs');
+const { resolve: pathResolve, join } = require('path');
 
 function resolve(...args) {
   return pathResolve(__dirname, ...args);
 }
+
+const srcDir = resolve('./src');
 
 module.exports = {
   resolve: resolve,
@@ -24,16 +27,7 @@ module.exports = {
     },
     modular: {
       inputOptions: {
-        input: [
-          resolve('./src/isBoolean.js'),
-          resolve('./src/isFunction.js'),
-          resolve('./src/isNil.js'),
-          resolve('./src/isNumber.js'),
-          resolve('./src/isObject.js'),
-          resolve('./src/isString.js'),
-          resolve('./src/isUndefined.js'),
-          resolve('./src/index.js')
-        ]
+        input: readdirSync(srcDir).map(n => join(srcDir, n))
       },
       outputOptions: {
         dir: resolve('./dist'),

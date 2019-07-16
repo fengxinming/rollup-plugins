@@ -12,6 +12,7 @@ const node = require('rollup-plugin-node-resolve');
 const flow = require('rollup-plugin-flow-no-whitespace');
 const { minify } = require('uglify-js');
 const { getLogger } = require('clrsole');
+const { removeSync } = require('fs-extra');
 const combine = require('../index');
 const { resolve, config } = require('./config');
 const {
@@ -154,6 +155,8 @@ function getSize(code) {
   return (code.length / 1024).toFixed(2) + 'kb';
 }
 
-Object.keys(config).forEach(async (key) => {
-  await buildSrc(genConfig(key, config[key]));
+removeSync(resolve('./dist'));
+
+Object.keys(config).forEach((key) => {
+  buildSrc(genConfig(key, config[key]));
 });

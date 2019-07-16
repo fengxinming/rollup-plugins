@@ -29,7 +29,7 @@ function es({ dir, base }, exportsType, filter) {
 }
 
 function cjs({ dir, base }, exportsType, filter) {
-  let exportString = ``;
+  let exportString = `'use strict';${EOL}${EOL}`;
 
   switch (exportsType) {
     case 'named':
@@ -45,7 +45,7 @@ function cjs({ dir, base }, exportsType, filter) {
 
       return exportString;
     default:
-      exportString = `'use strict';${EOL}${EOL}module.exports = {`;
+      exportString += 'module.exports = {';
       readdirSync(dir).forEach((file) => {
         if (file !== base) {
           const filePath = join(dir, file);
