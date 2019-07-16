@@ -10,13 +10,13 @@ module.exports = {
   resolve: resolve,
 
   config: {
-    utils: {
+    main: {
       isProd: true,
       inputOptions: {
         input: resolve('./src/index.js')
       },
       outputOptions: {
-        file: resolve('./dist/utils.js'),
+        file: resolve('./dist/main.js'),
         format: 'umd',
         legacy: false,
         esModule: false
@@ -31,7 +31,8 @@ module.exports = {
           resolve('./src/isNumber.js'),
           resolve('./src/isObject.js'),
           resolve('./src/isString.js'),
-          resolve('./src/isUndefined.js')
+          resolve('./src/isUndefined.js'),
+          resolve('./src/index.js')
         ]
       },
       outputOptions: {
@@ -42,4 +43,4 @@ module.exports = {
       }
     }
   }
-}
+};

@@ -34,6 +34,7 @@ const { output } = await bundle.write({
 - exclude String / RegExp / Array
 - filter  Function(filePath)      Filter files which can be exported
 - exports 'default' / 'named'
+- format  'es' / 'cjs'
 
 ## Example
 

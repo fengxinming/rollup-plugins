@@ -45,9 +45,10 @@ function genConfig(name, opts) {
       __VERSION__: version
     }, replaceAll)),
 
-    name === 'utils' && combine({
-      include: /src\/index.js$/
-      // exports: 'default' // or named
+    combine({
+      include: /src\/index.js$/,
+      format: 'es', // cjs
+      exports: 'default' // or named
     }),
 
     flow(),
@@ -153,6 +154,6 @@ function getSize(code) {
   return (code.length / 1024).toFixed(2) + 'kb';
 }
 
-Object.keys(config).forEach((key) => {
-  buildSrc(genConfig(key, config[key]));
+Object.keys(config).forEach(async (key) => {
+  await buildSrc(genConfig(key, config[key]));
 });
