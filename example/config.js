@@ -35,6 +35,15 @@ module.exports = {
         legacy: false,
         esModule: false
       }
+    },
+    es: {
+      inputOptions: {
+        input: readdirSync(srcDir).map(n => join(srcDir, n))
+      },
+      outputOptions: {
+        dir: resolve('./dist/es'),
+        format: 'es'
+      }
     }
   }
 };

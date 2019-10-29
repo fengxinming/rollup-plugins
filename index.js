@@ -11,21 +11,37 @@ function defaultFilter(file) {
 }
 
 function es({ dir, base }, exportsType, filter) {
-  let importString = '';
-  let exportString = `${EOL}export ${exportsType === 'named' ? '' : 'default '}{`;
-  readdirSync(dir).forEach((file) => {
-    if (file !== base) {
-      const filePath = join(dir, file);
-      if (filter(filePath)) {
-        const model = file.replace(/\.(\w+)$/, '');
-        importString += `import ${model} from './${file}';${EOL}`;
-        exportString += `${EOL}  ${model},`;
-      }
-    }
-  });
-  exportString = `${exportString.slice(0, -1)}${EOL}};${EOL}`;
+  let exportString = '';
 
-  return importString + exportString;
+  switch (exportsType) {
+    case 'named':
+      readdirSync(dir).forEach((file) => {
+        if (file !== base) {
+          const filePath = join(dir, file);
+          if (filter(filePath)) {
+            const model = file.replace(/\.(\w+)$/, '');
+            exportString += `export { default as ${model} } from './${file}';${EOL}`;
+          }
+        }
+      });
+
+      return exportString;
+    default:
+      let importString = '';
+      exportString = `${EOL}export default {`;
+      readdirSync(dir).forEach((file) => {
+        if (file !== base) {
+          const filePath = join(dir, file);
+          if (filter(filePath)) {
+            const model = file.replace(/\.(\w+)$/, '');
+            importString += `import ${model} from './${file}';${EOL}`;
+            exportString += `${EOL}  ${model},`;
+          }
+        }
+      });
+      exportString = `${exportString.slice(0, -1)}${EOL}};${EOL}`;
+      return importString + exportString;
+  }
 }
 
 function cjs({ dir, base }, exportsType, filter) {
