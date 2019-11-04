@@ -9,7 +9,6 @@ const alias = require('rollup-plugin-alias');
 const cjs = require('rollup-plugin-commonjs');
 const replace = require('rollup-plugin-replace');
 const node = require('rollup-plugin-node-resolve');
-const flow = require('rollup-plugin-flow-no-whitespace');
 const { minify } = require('uglify-js');
 const { getLogger } = require('clrsole');
 const { removeSync } = require('fs-extra');
@@ -45,18 +44,15 @@ function genConfig(name, opts) {
     replace(Object.assign({
       __VERSION__: version
     }, replaceAll)),
-
+    alias(Object.assign({
+      '@': resolve('./')
+    }, aliases)),
     combine({
       include: /src\/index.js$/,
       format: 'es', // cjs
       exports: 'default' // or named
     }),
-
-    flow(),
     buble(),
-    alias(Object.assign({
-      '@': resolve('./')
-    }, aliases)),
     node({
       mainFields: ['module', 'main', 'jsnext'],
       browser: true
@@ -158,5 +154,7 @@ function getSize(code) {
 removeSync(resolve('./dist'));
 
 Object.keys(config).forEach((key) => {
-  buildSrc(genConfig(key, config[key]));
+  buildSrc(genConfig(key, config[key])).catch((e) => {
+    console.error(e);
+  });
 });
