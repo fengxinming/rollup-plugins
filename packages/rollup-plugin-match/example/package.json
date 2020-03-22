@@ -1,0 +1,14 @@
+{
+  "name": "utils",
+  "version": "1.0.0",
+  "description": "utils",
+  "main": "build.js",
+  "scripts": {
+    "build": "rollup --config"
+  },
+  "author": "Jesse Feng",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^2.1.0"
+  }
+}

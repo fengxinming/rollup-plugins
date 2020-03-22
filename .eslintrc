@@ -67,6 +67,7 @@
         }
       }
     ],
-    "no-fallthrough": 0
+    "no-fallthrough": 0,
+    "prefer-template": 2
   }
 }

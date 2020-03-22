@@ -1,8 +1,8 @@
 {
-  "name": "rollup-plugins",
-  "version": "1.0.0",
-  "private": true,
-  "description": "rollup相关插件",
+  "name": "rollup-plugin-combine",
+  "version": "1.0.1",
+  "description": "A rollup plugin for combining dynamic JavaScript files which can be compiled into a library or application.",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,9 +11,8 @@
     "url": "git+https://github.com/fengxinming/rollup-plugin-combine.git"
   },
   "keywords": [
-    "plugins",
-    "rollup-plugins",
-    "rollup"
+    "rollup",
+    "plugin"
   ],
   "author": "Jesse Feng",
   "license": "MIT",
@@ -21,12 +20,10 @@
     "url": "https://github.com/fengxinming/rollup-plugin-combine/issues"
   },
   "homepage": "https://github.com/fengxinming/rollup-plugin-combine#readme",
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+    "rollup-pluginutils": "^2.8.1"
   }
 }
