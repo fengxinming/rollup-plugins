@@ -1,15 +1,12 @@
 {
   "name": "rollup-plugin-combine",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0",
   "description": "A rollup plugin for combining dynamic JavaScript files which can be compiled into a library or application.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fengxinming/rollup-plugin-combine.git"
-  },
+  "repository": "https://github.com/fengxinming/rollup-plugins/tree/master/packages/rollup-plugin-combine2.x",
   "keywords": [
     "rollup",
     "plugin"
@@ -17,13 +14,10 @@
   "author": "Jesse Feng",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fengxinming/rollup-plugin-combine/issues"
+    "url": "https://github.com/fengxinming/rollup-plugins/issues"
   },
-  "homepage": "https://github.com/fengxinming/rollup-plugin-combine#readme",
+  "homepage": "https://github.com/fengxinming/rollup-plugins/tree/master/packages/rollup-plugin-combine2.x#readme",
   "directories": {
     "example": "example"
-  },
-  "dependencies": {
-    "globby": "^11.0.0"
   }
 }

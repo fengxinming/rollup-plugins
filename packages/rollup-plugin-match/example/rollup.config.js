@@ -5,7 +5,7 @@ module.exports = [{
   input: 'src/*.js',
   plugins: [empty({
     silent: false,
-    dir: 'dist/lib'
+    file: 'dist/lib/**/*.js'
   }), match()],
   output: {
     dir: 'dist/lib',

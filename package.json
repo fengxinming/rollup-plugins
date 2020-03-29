@@ -4,7 +4,10 @@
   "private": true,
   "description": "rollup相关插件",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release:combine": "npm publish packages/rollup-plugin-combine2.x",
+    "release:empty": "npm publish packages/rollup-plugin-empty",
+    "release:match": "npm publish packages/rollup-plugin-match"
   },
   "repository": {
     "type": "git",

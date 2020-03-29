@@ -1,18 +1,17 @@
 'use strict';
 
-const { posix: { join } } = require('path');
 const globby = require('globby');
 
 module.exports = function (conf) {
-  const cwd = process.cwd();
-  const opts = Object.assign({ cwd }, conf);
+  conf = Object.assign({ cwd: process.cwd(), absolute: true }, conf);
 
   return {
+    name: 'match',
+
     options(options) {
       const { input } = options;
-      options.input = globby
-        .sync(input, opts)
-        .map(n => join(cwd, n));
+
+      options.input = globby.sync(input, conf);
     }
   };
 };

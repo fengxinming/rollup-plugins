@@ -1,4 +1,5 @@
 # rollup-plugin-combine
+
 A rollup plugin for combining dynamic JavaScript files which can be compiled into a library or application.
 
 ## Installation
@@ -9,33 +10,89 @@ npm install rollup-plugin-combine --save-dev
 
 ## Usage
 
+rollup.config.js
+
+### generate chunks
+
 ```js
+const match = require('rollup-plugin-match');
+const empty = require('rollup-plugin-empty');
 const combine = require('rollup-plugin-combine');
 
-const bundle = await rollup.rollup({
-  input: resolve('./src/index.js'), // Empty file
+module.exports = [{
+  input: 'src/*.js',
   plugins: [
-    combine({
-      include: /src\/index.js$/
+    empty({
+      silent: false,
+      file: 'dist/cjs.js'
     }),
-  ]
-});
-const { output } = await bundle.write({
-  file: resolve('./dist/index.js'),
-  format: 'umd',
-  legacy: false,
-  esModule: false
-});
+    match(),
+    combine()
+  ],
+  output: {
+    file: 'dist/cjs.js',
+    format: 'cjs'
+  }
+}, {
+  input: 'src/*.js',
+  plugins: [
+    empty({
+      silent: false,
+      file: 'dist/lib/**/*.js'
+    }),
+    match()
+  ],
+  output: {
+    dir: 'dist/lib',
+    format: 'cjs'
+  }
+}, {
+  input: 'src/*.js',
+  plugins: [
+    empty({
+      silent: false,
+      dir: 'dist/es'
+    }),
+    match(),
+    combine({
+      outputDir: true
+    })
+  ],
+  output: {
+    dir: 'dist/es',
+    format: 'es'
+  }
+}];
 
 ```
 
-### Options
-- include String / RegExp / Array
-- exclude String / RegExp / Array
-- filter  Function(filePath)      Filter files which can be exported
-- exports 'default' / 'named'
-- format  'es' / 'cjs'
+### generate one chunk
 
-## Example
+```js
+const match = require('rollup-plugin-match');
+const empty = require('rollup-plugin-empty');
+const combine = require('rollup-plugin-combine');
 
-- [rollup-plugin-combine](example)
+module.exports = {
+  input: 'src/*.js',
+  plugins: [
+    empty({
+      silent: false,
+      dir: 'dist'
+    }),
+    match(),
+    combine()
+  ],
+  output: {
+    file: 'dist/index.es.js',
+    format: 'es'
+  }
+};
+
+```
+
+## Options
+- main `String` (default: `'index.js'`) virtual entry
+- outputDir `Boolean` generate chunks or not
+- exports `String` (`undefined`、`'named'` or `'default'`)
+

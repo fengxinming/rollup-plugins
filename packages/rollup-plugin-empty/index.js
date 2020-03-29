@@ -1,6 +1,6 @@
 'use strict';
 
-const { posix: { join, relative } } = require('path');
+const { join, relative } = require('path');
 const { emptyDirSync, removeSync } = require('fs-extra');
 const globby = require('globby');
 const { getLogger } = require('clrsole');
@@ -10,10 +10,12 @@ const { isArray } = Array;
 module.exports = function (conf) {
   conf = conf || {};
 
-  let { file, dir, glob, cwd, silent } = conf;
-  cwd = cwd || process.cwd();
-  file = file && globby.sync(file, Object.assign({ cwd }, glob));
+  let { file, dir, glob, silent } = conf;
+  glob = Object.assign({ cwd: process.cwd(), absolute: true }, glob);
+  file = file && globby.sync(file, glob);
   dir = !isArray(dir) ? [dir] : dir;
+
+  const { cwd } = glob;
 
   return {
     name: 'empty',
@@ -21,9 +23,6 @@ module.exports = function (conf) {
     buildStart() {
       if (isArray(file)) {
         file.forEach((f) => {
-          if (!f.startsWith('/')) {
-            f = join(cwd, f);
-          }
           removeSync(f);
           if (silent === false) {
             logger.info('删除文件:', relative(cwd, f));

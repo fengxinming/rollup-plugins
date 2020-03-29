@@ -1,28 +1,26 @@
 {
   "name": "rollup-plugin-empty",
   "version": "1.0.0",
-  "description": "Matches files for rollup",
+  "description": "A rollup plugin for emptying dir or deleting files",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fengxinming/rollup-plugin-combine.git"
-  },
+  "repository": "https://github.com/fengxinming/rollup-plugins/tree/master/packages/rollup-plugin-empty",
   "keywords": [
     "rollup",
+    "rollup-plugin-empty",
     "rollup-plugin",
     "empty"
   ],
   "author": "Jesse Feng",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fengxinming/rollup-plugin-combine/issues"
+    "url": "https://github.com/fengxinming/rollup-plugins/issues"
   },
-  "homepage": "https://github.com/fengxinming/rollup-plugin-combine#readme",
+  "homepage": "https://github.com/fengxinming/rollup-plugins/tree/master/packages/rollup-plugin-empty#readme",
   "dependencies": {
-    "clrsole": "3.0.0",
+    "clrsole": "^3.0.0",
     "fs-extra": "^9.0.0",
     "globby": "^11.0.0"
   }

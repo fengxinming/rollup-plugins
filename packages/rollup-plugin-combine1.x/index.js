@@ -14,7 +14,7 @@ function es({ dir, base }, exportsType, filter) {
   let exportString = '';
 
   switch (exportsType) {
-    case 'named':
+    case 'named': {
       readdirSync(dir).forEach((file) => {
         if (file !== base) {
           const filePath = join(dir, file);
@@ -26,7 +26,8 @@ function es({ dir, base }, exportsType, filter) {
       });
 
       return exportString;
-    default:
+    }
+    default: {
       let importString = '';
       exportString = `${EOL}export default {`;
       readdirSync(dir).forEach((file) => {
@@ -41,6 +42,7 @@ function es({ dir, base }, exportsType, filter) {
       });
       exportString = `${exportString.slice(0, -1)}${EOL}};${EOL}`;
       return importString + exportString;
+    }
   }
 }
 
