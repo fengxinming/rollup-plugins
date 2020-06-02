@@ -94,5 +94,5 @@ module.exports = {
 ## Options
 - main `String` (default: `'index.js'`) virtual entry
 - outputDir `Boolean` generate chunks or not
-- exports `String` (`undefined`、`'named'` or `'default'`)
+- exports `String` (default: `'named'`, `'import'`、`'named'` or `'default'`)
 

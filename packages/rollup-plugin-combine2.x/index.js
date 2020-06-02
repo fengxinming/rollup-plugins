@@ -2,6 +2,7 @@
 
 const { EOL } = require('os');
 const { parse } = require('path');
+const camelCase = require('lodash/camelCase');
 
 module.exports = function (opts) {
   let { main, outputDir, exports: exportsType } = opts || {};
@@ -36,14 +37,16 @@ module.exports = function (opts) {
         switch (exportsType) {
           case 'named':
             return files.map((file) => {
-              const { name } = parse(file);
+              let { name } = parse(file);
+              name = camelCase(name);
               return `export { default as ${name} } from '${file}';`;
             }).join(EOL);
           case 'default': {
             let importString = '';
             let exportString = `${EOL}export default {`;
             files.forEach((file) => {
-              const { name } = parse(file);
+              let { name } = parse(file);
+              name = camelCase(name);
               importString += `import ${name} from '${file}';${EOL}`;
               exportString += `${name},`;
             });

@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-combine",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A rollup plugin for combining dynamic JavaScript files which can be compiled into a library or application.",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,8 @@
   "homepage": "https://github.com/fengxinming/rollup-plugins/tree/master/packages/rollup-plugin-combine2.x#readme",
   "directories": {
     "example": "example"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
   }
 }
