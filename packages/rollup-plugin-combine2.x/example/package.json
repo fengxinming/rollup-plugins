@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "rollup": "^2.1.0"
+  },
+  "dependencies": {
+    "camelcase": "^6.2.0"
   }
 }

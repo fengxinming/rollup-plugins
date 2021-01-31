@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-combine",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "A rollup plugin for combining dynamic JavaScript files which can be compiled into a library or application.",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,6 @@
     "example": "example"
   },
   "dependencies": {
-    "lodash": "^4.17.15"
+    "camelcase": "^6.2.0"
   }
 }

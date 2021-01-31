@@ -92,7 +92,7 @@ module.exports = {
 ```
 
 ## Options
-- main `String` (default: `'index.js'`) virtual entry
-- outputDir `Boolean` generate chunks or not
-- exports `String` (default: `'named'`, `'import'`、`'named'` or `'default'`)
-
+- main `string` (default: `'index.js'`) virtual entry
+- outputDir `boolean` generate chunks or not
+- exports `string` (default: `'named'`) `'import'`、`'named'` or `'default'`
+- camelCase `object` (optional) [see here](https://www.npmjs.com/package/camelcase)

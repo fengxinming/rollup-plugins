@@ -1,7 +1,7 @@
 interface Options {
   main?: 'index.js',
   outputDir?: boolean,
-  exports?: 'named' | 'import' | 'named'
+  exports?: 'default' | 'import' | 'named'
 }
 
 declare function combine(opts?: Options)
