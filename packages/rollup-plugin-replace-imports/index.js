@@ -30,9 +30,8 @@ function replaceImports(opts) {
         return n;
       });
       return { code, map: chunk.map };
-    },
+    }
   };
 }
-
 
 module.exports = replaceImports;
