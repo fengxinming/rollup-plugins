@@ -1,43 +1,32 @@
-# rollup-plugin-empty
+# rollup-plugin-replace-imports
 
-> A rollup plugin for emptying dir or deleting files.
+> 替换导入模块的路径
 
-## Installation
-
-```bash
-npm install rollup-plugin-empty --save-dev
-```
-
-## Usage
-
-rollup.config.js
-
-### generate chunks
+## 使用
 
 ```js
-const empty = require('rollup-plugin-empty');
-const match = require('rollup-plugin-match');
+import replaceImports from 'rollup-plugin-replace-imports';
 
-module.exports = {
-  input: 'src/*.js',
+export default {
+  input: 'src/index.js',
   plugins: [
-    empty({
-      silent: false,
-      dir: 'dist/es'
-    }),
-    match()
+    // ...
   ],
-  output: {
-    dir: 'dist/es',
-    format: 'es'
-  }
+  output: [
+    {
+      dir: 'dist',
+      format: 'cjs',
+      exports: 'auto',
+      plugins: [
+        replaceImports(n => n.replace('/es/', '/')),
+      ],
+    },
+    {
+      dir: 'dist/es',
+      format: 'es',
+      exports: 'auto',
+    },
+  ],
 };
 
 ```
-
-## Options
-- file `String|Array` delete files if matches
-- dir `String|Array` empty dir if matches
-- silent `Boolean` show info after deleting
-- glob see the [fast-glob options](https://github.com/mrmlnc/fast-glob#options-3)
-
