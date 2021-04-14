@@ -27,6 +27,7 @@ module.exports = [{
   ],
   output: {
     dir: 'dist/lib',
+    export: 'auto',
     format: 'cjs'
   }
 }, {
@@ -38,6 +39,7 @@ module.exports = [{
     }),
     match(),
     combine({
+      exports: 'default',
       outputDir: true
     })
   ],

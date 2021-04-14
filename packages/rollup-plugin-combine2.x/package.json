@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-combine",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A rollup plugin for combining dynamic JavaScript files which can be compiled into a library or application.",
   "main": "index.js",
   "scripts": {

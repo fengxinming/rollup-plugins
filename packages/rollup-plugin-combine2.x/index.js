@@ -4,6 +4,14 @@ const { EOL } = require('os');
 const { parse } = require('path');
 const camelCase = require('camelcase');
 
+function camelCaseName(file, camelCaseOptions) {
+  let { name } = parse(file);
+  if (camelCaseOptions !== false) {
+    name = camelCase(name, camelCaseOptions);
+  }
+  return name;
+}
+
 module.exports = function (opts) {
   let { main, outputDir, exports: exportsType, camelCase: camelCaseOptions } = opts || {};
   let files = [];
@@ -34,29 +42,25 @@ module.exports = function (opts) {
         if (!files.length) {
           return Promise.resolve('');
         }
+
+        let name;
         switch (exportsType) {
           case 'named':
-            return files.map((file) => {
-              let { name } = parse(file);
-              name = camelCase(name, camelCaseOptions);
-              return `export { default as ${name} } from '${file}';`;
-            }).join(EOL);
+            return files.map(file => `export { default as ${camelCaseName(file, camelCaseOptions)} } from '${file}';`).join(EOL);
           case 'default': {
-            let importString = '';
-            let exportString = `${EOL}export default {`;
-            files.forEach((file) => {
-              let { name } = parse(file);
-              name = camelCase(name, camelCaseOptions);
-              importString += `import ${name} from '${file}';${EOL}`;
-              exportString += `${name},`;
-            });
-            exportString = `${exportString.slice(0, -1)}};${EOL}`;
-            return importString + exportString;
+            const importDeclare = [];
+            const exportDeclare = [];
+            for (const file of files) {
+              name = camelCaseName(file, camelCaseOptions);
+              importDeclare[importDeclare.length] = `import ${name} from '${file}';`;
+              exportDeclare[exportDeclare.length] = name;
+            }
+            return exportDeclare.length
+              ? `${importDeclare.join(EOL)}${EOL}export default { ${exportDeclare.join(', ')} };${EOL}`
+              : '';
           }
           default:
-            return files.map((file) => {
-              return `import '${file}';`;
-            }).join(EOL);
+            return files.map(file => `import '${file}';`).join(EOL);
         }
       }
     }
