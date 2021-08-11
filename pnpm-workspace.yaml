@@ -1,3 +1,4 @@
 packages:
   # 子模块
   - 'packages/**'
+  - 'examples/*'

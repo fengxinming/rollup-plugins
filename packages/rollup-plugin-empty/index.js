@@ -10,7 +10,8 @@ const { isArray } = Array;
 module.exports = function (conf) {
   conf = conf || {};
 
-  let { file, dir, glob, silent } = conf;
+  const { silent } = conf;
+  let { file, dir, glob } = conf;
   glob = Object.assign({ cwd: process.cwd(), absolute: true }, glob);
   file = file && globby.sync(file, glob);
   dir = !isArray(dir) ? [dir] : dir;
