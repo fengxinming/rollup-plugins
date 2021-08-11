@@ -1,11 +1,11 @@
 import camelcase from 'camelcase';
-interface Options {
+import { Plugin } from 'rollup';
+
+export interface Options {
   main?: 'index.js',
   outputDir?: boolean,
   exports?: 'default' | 'import' | 'named',
   camelCase?: camelcase.Options | false
 }
 
-declare function combine(opts?: Options)
-
-export default combine
+export default (opts?: Options) => Plugin

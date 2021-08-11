@@ -1,8 +1,8 @@
 {
-  "name": "utils",
+  "name": "demo-combine",
   "version": "1.0.0",
-  "description": "utils",
-  "main": "build.js",
+  "description": "demo-combine",
+  "main": "index.js",
   "scripts": {
     "build": "rollup --config"
   },
