@@ -1,15 +1,24 @@
 import { Plugin } from 'rollup';
 
+export type handler = (namedExport: string, pkgName: string) => string;
+
 export interface ModuleOption {
-  name: string;
-  importModule?: (namedExport: string, name: string) => string;
-  importStyle?: (namedExport: string, name: string) => string;
+  name: string | string[];
+  importModule?: handler | true;
+  importStyle?: handler | true;
 }
 
 export interface Options {
-  modules: ModuleOption[]
+  modules: ModuleOption[];
 }
 
-type createPlugin = (opts?: Options) => Plugin;
+export type createPlugin = (opts: Options) => Plugin;
 
-export default createPlugin
+export type decamelize = (name: string) => string;
+
+declare interface createPlugin {
+  decamelize: decamelize;
+  createPlugin: createPlugin;
+}
+
+export default createPlugin;

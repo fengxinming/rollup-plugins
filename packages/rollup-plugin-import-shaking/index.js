@@ -3,6 +3,8 @@
 const { EOL } = require('os');
 const { init, parse } = require('es-module-lexer');
 
+const { isArray } = Array;
+
 /**
  * 驼峰逆转换
  * Convert a camelized name into a lowercased name
@@ -14,6 +16,20 @@ function decamelize(name) {
   return name.replace(/[A-Z]/g, (match, index) => {
     return `${index > 0 ? '-' : ''}${match.toLowerCase()}`;
   });
+}
+
+function defaultImportModule(namedExport, pkgName) {
+  return `${pkgName}/es/${decamelize(namedExport)}`;
+}
+
+function defaultImportStyle(namedExport, pkgName) {
+  return `${pkgName}/es/${decamelize(namedExport)}/style`;
+}
+
+function matchPkgName(name, pkgName) {
+  return isArray(name)
+    ? name.indexOf(pkgName) > -1
+    : name === pkgName;
 }
 
 /**
@@ -35,17 +51,17 @@ function processModules(pkgName, specifiers, modules) {
       }
 
       // matched package name
-      if (lib.name === pkgName) {
+      if (matchPkgName(lib.name, pkgName)) {
         let { importModule, importStyle } = lib;
 
         // new module path
-        if (typeof importModule === 'undefined') {
-          importModule = (n, s) => `${s}/es/${decamelize(n)}`;
+        if (typeof importModule === 'undefined' || importModule === true) {
+          importModule = defaultImportModule;
         }
 
         // import css
-        if (typeof importStyle === 'undefined') {
-          importStyle = (n, s) => `${s}/es/${decamelize(n)}/style`;
+        if (importStyle === true) {
+          importStyle = defaultImportStyle;
         }
 
         let newImportDeclarationStr = '';
@@ -133,5 +149,6 @@ function importShaking({ modules = [] } = {}) {
 }
 
 importShaking.decamelize = decamelize;
+importShaking.createPlugin = importShaking;
 
 module.exports = importShaking;

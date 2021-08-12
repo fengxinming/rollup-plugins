@@ -1,4 +1,7 @@
-import { forEach, forOwn, noop } from 'celia';
+import { func1, func2 } from 'module1';
+import { func3, func4 } from 'module2';
 
-forEach([], noop);
-forOwn({}, noop);
+func1();
+func2();
+func3();
+func4();
