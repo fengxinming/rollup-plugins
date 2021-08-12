@@ -9,7 +9,7 @@ export interface ModuleOption {
 }
 
 export interface Options {
-  modules: ModuleOption[]
+  modules: ModuleOption[];
 }
 
 function createPlugin (opts: Options): Plugin;
