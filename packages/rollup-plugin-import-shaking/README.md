@@ -1,7 +1,7 @@
 
 # rollup-plugin-import-shaking
 
-A rollup plugin for import shaking.
+Import modules as needed.
 
 ## Installation
 
