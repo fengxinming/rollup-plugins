@@ -5,10 +5,7 @@
   "description": "rollup相关插件",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release:combine": "npm publish packages/rollup-plugin-combine2.x",
-    "release:empty": "npm publish packages/rollup-plugin-empty",
-    "release:match": "npm publish packages/rollup-plugin-match",
-    "release:replace-imports": "npm publish packages/rollup-plugin-replace-imports"
+    "release:combine": "npm publish packages/rollup-plugin-combine"
   },
   "repository": {
     "type": "git",
