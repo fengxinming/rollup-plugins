@@ -1,15 +1,22 @@
 import { Plugin } from 'rollup';
 
+export type handler = (namedExport: string, pkgName: string) => string;
+
 export interface ModuleOption {
-  name: string;
-  importModule?: (namedExport: string, name: string) => string;
-  importStyle?: (namedExport: string, name: string) => string;
+  name: string | string[];
+  importModule?: handler | true;
+  importStyle?: handler | true;
 }
 
 export interface Options {
   modules: ModuleOption[]
 }
 
-type createPlugin = (opts?: Options) => Plugin;
+function createPlugin (opts: Options): Plugin;
 
-export default createPlugin
+declare namespace createPlugin {
+  decamelize: (name: string) => string;
+  createPlugin: createPlugin;
+}
+
+export default createPlugin;
