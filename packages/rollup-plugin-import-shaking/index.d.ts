@@ -12,10 +12,12 @@ export interface Options {
   modules: ModuleOption[];
 }
 
-function createPlugin (opts: Options): Plugin;
+export type createPlugin = (opts: Options) => Plugin;
 
-declare namespace createPlugin {
-  decamelize: (name: string) => string;
+export type decamelize = (name: string) => string;
+
+declare interface createPlugin {
+  decamelize: decamelize;
   createPlugin: createPlugin;
 }
 

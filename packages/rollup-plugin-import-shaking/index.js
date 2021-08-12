@@ -27,7 +27,7 @@ function defaultImportStyle(namedExport, pkgName) {
 }
 
 function matchPkgName(name, pkgName) {
-  return isArray(name) 
+  return isArray(name)
     ? name.indexOf(pkgName) > -1
     : name === pkgName;
 }
