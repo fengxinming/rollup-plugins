@@ -1,6 +1,6 @@
 const match = require('../../packages/rollup-plugin-match');
 const empty = require('../../packages/rollup-plugin-empty');
-const combine = require('../../packages/rollup-plugin-combine2.x');
+const combine = require('../../packages/rollup-plugin-combine');
 
 module.exports = [{
   input: 'src/*.js',

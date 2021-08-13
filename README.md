@@ -1,6 +1,6 @@
 # rollup-plugins
 
-> some custom rollup plugins
+> Some custom rollup plugins.
 
 Packages | Description 
 -------- | ----------- 
