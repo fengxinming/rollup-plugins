@@ -1,7 +1,12 @@
 
 # rollup-plugin-import-shaking
 
-Import modules as needed.
+[![npm package](https://nodei.co/npm/rollup-plugin-import-shaking.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/rollup-plugin-import-shaking)
+
+> Import modules as needed.
+
+[![NPM version](https://img.shields.io/npm/v/rollup-plugin-import-shaking.svg?style=flat)](https://npmjs.org/package/rollup-plugin-import-shaking)
+[![NPM Downloads](https://img.shields.io/npm/dm/rollup-plugin-import-shaking.svg?style=flat)](https://npmjs.org/package/rollup-plugin-import-shaking)
 
 ## Installation
 
