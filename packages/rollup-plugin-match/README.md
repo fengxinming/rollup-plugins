@@ -1,6 +1,12 @@
 # rollup-plugin-match
 
-A rollup plugin for matching files.
+[![npm package](https://nodei.co/npm/rollup-plugin-match.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/rollup-plugin-match)
+
+> A rollup plugin for matching files.
+
+[![NPM version](https://img.shields.io/npm/v/rollup-plugin-match.svg?style=flat)](https://npmjs.org/package/rollup-plugin-match)
+[![NPM Downloads](https://img.shields.io/npm/dm/rollup-plugin-match.svg?style=flat)](https://npmjs.org/package/rollup-plugin-match)
+
 
 ## Installation
 

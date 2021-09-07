@@ -1,6 +1,12 @@
 # rollup-plugin-replace-imports
 
-> 替换导入模块的路径
+[![npm package](https://nodei.co/npm/rollup-plugin-replace-imports.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/rollup-plugin-replace-imports)
+
+> Replace unresolved imports.
+
+[![NPM version](https://img.shields.io/npm/v/rollup-plugin-replace-imports.svg?style=flat)](https://npmjs.org/package/rollup-plugin-replace-imports)
+[![NPM Downloads](https://img.shields.io/npm/dm/rollup-plugin-replace-imports.svg?style=flat)](https://npmjs.org/package/rollup-plugin-replace-imports)
+
 
 ## 使用
 

@@ -1,6 +1,12 @@
 # rollup-plugin-combine
 
-A rollup plugin for combining dynamic JavaScript files which can be compiled into a library or application.
+[![npm package](https://nodei.co/npm/rollup-plugin-combine.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/rollup-plugin-combine)
+
+> A rollup plugin for combining dynamic JavaScript files which can be compiled into a library or application.
+
+[![NPM version](https://img.shields.io/npm/v/rollup-plugin-combine.svg?style=flat)](https://npmjs.org/package/rollup-plugin-combine)
+[![NPM Downloads](https://img.shields.io/npm/dm/rollup-plugin-combine.svg?style=flat)](https://npmjs.org/package/rollup-plugin-combine)
+
 
 ## Installation
 
@@ -16,7 +22,7 @@ rollup.config.js
 
 ```js
 const match = require('rollup-plugin-match');
-const empty = require('rollup-plugin-empty');
+const empty = require('rollup-plugin-combine');
 const combine = require('rollup-plugin-combine');
 
 module.exports = [{
@@ -70,7 +76,7 @@ module.exports = [{
 
 ```js
 const match = require('rollup-plugin-match');
-const empty = require('rollup-plugin-empty');
+const empty = require('rollup-plugin-combine');
 const combine = require('rollup-plugin-combine');
 
 module.exports = {

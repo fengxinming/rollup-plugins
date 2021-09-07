@@ -1,6 +1,11 @@
 # rollup-plugin-empty
 
+[![npm package](https://nodei.co/npm/rollup-plugin-empty.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/rollup-plugin-empty)
+
 > A rollup plugin for emptying dir or deleting files.
+
+[![NPM version](https://img.shields.io/npm/v/rollup-plugin-empty.svg?style=flat)](https://npmjs.org/package/rollup-plugin-empty)
+[![NPM Downloads](https://img.shields.io/npm/dm/rollup-plugin-empty.svg?style=flat)](https://npmjs.org/package/rollup-plugin-empty)
 
 ## Installation
 
