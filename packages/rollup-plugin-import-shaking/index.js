@@ -26,73 +26,89 @@ function defaultImportStyle(namedExport, pkgName) {
   return `${pkgName}/es/${decamelize(namedExport)}/style`;
 }
 
-function matchPkgName(name, pkgName) {
-  return isArray(name)
-    ? name.indexOf(pkgName) > -1
-    : name === pkgName;
-}
-
 /**
  * 处理命名导出的模块
  * process named export modules
  *
  * @param {string} pkgName
  * @param {Node[]} specifiers
- * @param {object[]} modules
+ * @param {object} lib
  * @returns
  */
-function processModules(pkgName, specifiers, modules) {
-  // module shaking
-  if (modules) {
-    for (let lib of modules) {
-      // compat string definition
-      if (typeof lib === 'string') {
-        lib = { name: lib };
-      }
+function processModules(pkgName, specifiers, lib) {
+  const { importModule, importStyle } = lib;
 
-      // matched package name
-      if (matchPkgName(lib.name, pkgName)) {
-        let { importModule, importStyle } = lib;
+  let newImportDeclarationStr = '';
+  for (const specifier of specifiers) {
+    switch (specifier.type) {
+      case 'ImportDefaultSpecifier':
+        newImportDeclarationStr += `import ${specifier.local.name} from "${pkgName}";${EOL}`;
+        break;
 
-        // new module path
-        if (typeof importModule === 'undefined' || importModule === true) {
-          importModule = defaultImportModule;
+      case 'ImportSpecifier': {
+        const importedName = specifier.imported.name;
+        const moduleName = importModule ? importModule(importedName, pkgName) : pkgName;
+        newImportDeclarationStr += `import ${importedName} from "${moduleName}";${EOL}`;
+
+        if (importStyle) {
+          newImportDeclarationStr += `import "${importStyle(importedName, pkgName)}";${EOL}`;
         }
-
-        // import css
-        if (importStyle === true) {
-          importStyle = defaultImportStyle;
-        }
-
-        let newImportDeclarationStr = '';
-        for (const specifier of specifiers) {
-          switch (specifier.type) {
-            case 'ImportDefaultSpecifier':
-              newImportDeclarationStr += `import ${specifier.local.name} from "${pkgName}";${EOL}`;
-              break;
-
-            case 'ImportSpecifier': {
-              const importedName = specifier.imported.name;
-              const moduleName = importModule ? importModule(importedName, pkgName) : pkgName;
-              newImportDeclarationStr += `import ${importedName} from "${moduleName}";${EOL}`;
-
-              if (importStyle) {
-                newImportDeclarationStr += `import "${importStyle(importedName, pkgName)}";${EOL}`;
-              }
-              break;
-            }
-          }
-        }
-
-        return newImportDeclarationStr;
+        break;
       }
     }
   }
+
+  return newImportDeclarationStr;
 }
 
 function importShaking({ modules = [] } = {}) {
   if (!Array.isArray(modules) || modules.length === 0) {
     return;
+  }
+
+  const libs = {};
+  for (const lib of modules) {
+    switch (typeof lib) {
+      case 'string': // compat string definition
+        libs[lib] = {
+          name: lib,
+          importModule: defaultImportModule
+        };
+        break;
+      case 'object':
+        if (lib !== null) {
+          let { importModule, importStyle } = lib;
+          const { name } = lib;
+
+          // new module path
+          if (typeof importModule === 'undefined' || importModule === true) {
+            importModule = defaultImportModule;
+          }
+
+          // import css
+          if (importStyle === true) {
+            importStyle = defaultImportStyle;
+          }
+
+          if (isArray(name)) {
+            for (const n of name) {
+              libs[n] = {
+                name: n,
+                importModule,
+                importStyle
+              };
+            }
+          }
+          else {
+            libs[name] = {
+              name,
+              importModule,
+              importStyle
+            };
+          }
+        }
+        break;
+    }
   }
 
   // let config;
@@ -136,8 +152,14 @@ function importShaking({ modules = [] } = {}) {
           return;
         }
 
+        // matched package name
+        const currentLib = libs[pkgName];
+        if (!currentLib) {
+          return;
+        }
+
         // 处理模块 Process modules if it is valid
-        const newImportStr = processModules(pkgName, specifiers, modules);
+        const newImportStr = processModules(pkgName, specifiers, currentLib);
 
         if (newImportStr) {
           dest = dest.replace(importStr, newImportStr.slice(0, -2));
