@@ -149,13 +149,13 @@ function importShaking({ modules = [] } = {}) {
 
         // 只处理import语法 Only ImportDeclaration
         if (type !== 'ImportDeclaration') {
-          return;
+          continue;
         }
 
         // matched package name
         const currentLib = libs[pkgName];
         if (!currentLib) {
-          return;
+          continue;
         }
 
         // 处理模块 Process modules if it is valid
