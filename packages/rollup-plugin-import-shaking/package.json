@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-import-shaking",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Import modules as needed",
   "main": "index.js",
   "scripts": {
