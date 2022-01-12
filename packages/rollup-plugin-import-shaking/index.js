@@ -112,10 +112,6 @@ async function transform(src, libs) {
   return dest;
 }
 
-function endsWithJS(id) {
-  return id.endsWith('.js') || id.endsWith('.mjs');
-}
-
 function importShaking({ modules = [], hook } = {}) {
   if (!Array.isArray(modules) || modules.length === 0) {
     return;
@@ -173,7 +169,7 @@ function importShaking({ modules = [], hook } = {}) {
   switch(hook) {
     case 'load':
       config.load = async function(id) {
-        if (!endsWithJS(id)) {
+        if (!id.endsWith('.js') || !id.endsWith('.mjs')) {
           return null;
         }
         const src = await readFileAsync(id, 'utf8');
@@ -187,10 +183,9 @@ function importShaking({ modules = [], hook } = {}) {
       break;
     default:
       config.transform = async function (src, id) {
-        if (!endsWithJS(id)) {
+        if (id.endsWith('.html')) {
           return null;
         }
-  
         return transform.call(this, src, libs);
       };
   }
