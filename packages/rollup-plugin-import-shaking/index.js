@@ -1,9 +1,12 @@
 'use strict';
 
 const { EOL } = require('os');
+const { readFile } = require('fs');
+const { promisify } = require('util');
 const { init, parse } = require('es-module-lexer');
 
 const { isArray } = Array;
+const readFileAsync = promisify(readFile);
 
 /**
  * 驼峰逆转换
@@ -61,7 +64,59 @@ function processModules(pkgName, specifiers, lib) {
   return newImportDeclarationStr;
 }
 
-function importShaking({ modules = [] } = {}) {
+async function transform(src, libs) {
+  await init;
+
+  const [imports] = parse(src);
+  // n: package name
+  // s: start
+  // e: end
+  // ss: statement start
+  // se: statement end
+  // d: dynamic import
+  // a: assert
+
+  let dest = src;
+  for (const { n: pkgName, ss: startIndex, se: endIndex } of imports) {
+    // 申明语句字符串 Statement string
+    const importStr = src.substring(startIndex, endIndex);
+
+    // 忽略异常import申明语句 Ignore invalid import declaration
+    if (importStr.startsWith('import(')) {
+      continue;
+    }
+
+    // 抽象语法树对象 AST Node object
+    const ast = this.parse(importStr);
+
+    const { specifiers, type } = ast.body[0];
+
+    // 只处理import语法 Only ImportDeclaration
+    if (type !== 'ImportDeclaration') {
+      continue;
+    }
+
+    // matched package name
+    const currentLib = libs[pkgName];
+    if (!currentLib) {
+      continue;
+    }
+
+    // 处理模块 Process modules if it is valid
+    const newImportStr = processModules(pkgName, specifiers, currentLib);
+
+    if (newImportStr) {
+      dest = dest.replace(importStr, newImportStr.slice(0, -2));
+    }
+  }
+  return dest;
+}
+
+function endsWithJS(id) {
+  return id.endsWith('.js') || id.endsWith('.mjs');
+}
+
+function importShaking({ modules = [], hook } = {}) {
   if (!Array.isArray(modules) || modules.length === 0) {
     return;
   }
@@ -111,63 +166,36 @@ function importShaking({ modules = [] } = {}) {
     }
   }
 
-  // let config;
-
-  return {
+  let config = {
     name: 'import-shaking',
-
-    async transform(src, id) {
-      if (id.endsWith('.html')) {
-        return;
-      }
-
-      await init;
-
-      const [imports] = parse(src);
-      // n: package name
-      // s: start
-      // e: end
-      // ss: statement start
-      // se: statement end
-      // d: dynamic import
-      // a: assert
-
-      let dest = src;
-      for (const { n: pkgName, ss: startIndex, se: endIndex } of imports) {
-        // 申明语句字符串 Statement string
-        const importStr = src.substring(startIndex, endIndex);
-
-        // 忽略异常import申明语句 Ignore invalid import declaration
-        if (importStr.startsWith('import(')) {
-          continue;
-        }
-
-        // 抽象语法树对象 AST Node object
-        const ast = this.parse(importStr);
-
-        const { specifiers, type } = ast.body[0];
-
-        // 只处理import语法 Only ImportDeclaration
-        if (type !== 'ImportDeclaration') {
-          continue;
-        }
-
-        // matched package name
-        const currentLib = libs[pkgName];
-        if (!currentLib) {
-          continue;
-        }
-
-        // 处理模块 Process modules if it is valid
-        const newImportStr = processModules(pkgName, specifiers, currentLib);
-
-        if (newImportStr) {
-          dest = dest.replace(importStr, newImportStr.slice(0, -2));
-        }
-      }
-      return dest;
-    }
   };
+
+  switch(hook) {
+    case 'load':
+      config.load = async function(id) {
+        if (!endsWithJS(id)) {
+          return null;
+        }
+        const src = await readFileAsync(id, 'utf8');
+        return transform.call(this, src, libs);
+      };
+      break;
+    case 'renderChunk':
+      config.renderChunk = async function(code) {
+        return transform.call(this, code, libs);
+      };
+      break;
+    default:
+      config.transform = async function (src, id) {
+        if (!endsWithJS(id)) {
+          return null;
+        }
+  
+        return transform.call(this, src, libs);
+      };
+  }
+
+  return config;
 }
 
 importShaking.decamelize = decamelize;
