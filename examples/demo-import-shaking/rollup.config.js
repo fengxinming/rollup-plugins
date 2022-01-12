@@ -13,6 +13,9 @@ module.exports = {
       modules: [{
         name: ['module1', 'module2'],
         importModule: (n, m) => `${m}/es/${n}`
+      }, {
+        name: 'module3',
+        importModule: (n, m) => `${m}/es/${n}`
       }]
     })
   ],

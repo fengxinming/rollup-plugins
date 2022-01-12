@@ -9,6 +9,7 @@ export interface ModuleOption {
 }
 
 export interface Options {
+  hook?: 'load' | 'transform' | 'renderChunk';
   modules: ModuleOption[];
 }
 
