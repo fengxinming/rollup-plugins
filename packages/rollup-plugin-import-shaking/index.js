@@ -162,13 +162,13 @@ function importShaking({ modules = [], hook } = {}) {
     }
   }
 
-  let config = {
-    name: 'import-shaking',
+  const config = {
+    name: 'import-shaking'
   };
 
-  switch(hook) {
+  switch (hook) {
     case 'load':
-      config.load = async function(id) {
+      config.load = async function (id) {
         if (!id.endsWith('.js') || !id.endsWith('.mjs')) {
           return null;
         }
@@ -177,12 +177,12 @@ function importShaking({ modules = [], hook } = {}) {
       };
       break;
     case 'renderChunk':
-      config.renderChunk = async function(code) {
+      config.renderChunk = function (code) {
         return transform.call(this, code, libs);
       };
       break;
     default:
-      config.transform = async function (src, id) {
+      config.transform = function (src, id) {
         if (id.endsWith('.html')) {
           return null;
         }
