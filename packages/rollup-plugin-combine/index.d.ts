@@ -8,6 +8,4 @@ export interface Options {
   camelCase?: camelcase.Options | false
 }
 
-type createPlugin = (opts?: Options) => Plugin;
-
-export default createPlugin;
+export default function createPlugin(opts?: Options): Plugin
