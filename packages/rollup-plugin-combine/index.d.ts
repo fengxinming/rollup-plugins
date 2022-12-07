@@ -5,7 +5,8 @@ export interface Options {
   main?: 'index.js',
   outputDir?: boolean,
   exports?: 'default' | 'import' | 'named',
-  camelCase?: camelcase.Options | false
+  camelCase?: camelcase.Options | false,
+  dts?: boolean
 }
 
 export default function createPlugin(opts?: Options): Plugin
