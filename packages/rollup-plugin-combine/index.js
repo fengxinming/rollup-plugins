@@ -1,7 +1,8 @@
 'use strict';
 
 const { EOL } = require('os');
-const { parse, join } = require('path');
+const { parse, join, isAbsolute } = require('path');
+const { writeFile } = require('fs');
 const camelCase = require('camelcase');
 
 function createPlugin(opts) {
@@ -9,9 +10,10 @@ function createPlugin(opts) {
     opts = {};
   }
 
-  const { outputDir, camelCase: camelCaseOptions } = opts;
+  const { outputDir, camelCase: camelCaseOptions, dts } = opts;
   let { main, exports: exportsType } = opts;
   let files = [];
+  let mainCode = '';
 
   exportsType = exportsType || 'named';
   main = main || 'index.js';
@@ -52,12 +54,13 @@ function createPlugin(opts) {
         let name;
         switch (exportsType) {
           case 'named':
-            return files
+            mainCode = files
               .map((file) => {
                 const { name, dir } = parse(file);
                 return `export { default as ${camelCaseName(name)} } from '${join(dir, name)}';`;
               })
               .join(EOL);
+            break;
           case 'default': {
             const importDeclare = [];
             const exportDeclare = [];
@@ -67,17 +70,42 @@ function createPlugin(opts) {
               importDeclare[importDeclare.length] = `import ${name} from '${join(parsedPath.dir, parsedPath.name)}';`;
               exportDeclare[exportDeclare.length] = name;
             }
-            return exportDeclare.length
+            mainCode = exportDeclare.length
               ? `${importDeclare.join(EOL)}${EOL}export default { ${exportDeclare.join(', ')} };${EOL}`
               : '';
+            break;
           }
           default:
-            return files
+            mainCode = files
               .map((file) => {
                 const { name, dir } = parse(file);
                 return `import '${join(dir, name)}';`;
               })
               .join(EOL);
+        }
+        return mainCode;
+      }
+    },
+
+    writeBundle(options) {
+      if (['es', 'esm'].includes(options.format) && dts) {
+        const { dir, file } = options;
+        let p;
+        if (file) {
+          p = parse(file).dir;
+        } else if (dir) {
+          p = dir
+        }
+        if(p && !isAbsolute(p)) {
+          p = join(process.cwd(), p);
+        }
+        if (p && mainCode) {
+          writeFile(join(p, `${main.replace(/\.\w+$/, '')}.d.ts`), mainCode.replace(new RegExp(process.cwd(), 'g'), '.'), (err) => {
+            if (err) {
+              console.error(err);
+            }
+            mainCode = '';
+          });
         }
       }
     }
