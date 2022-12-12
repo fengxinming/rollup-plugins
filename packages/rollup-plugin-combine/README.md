@@ -102,3 +102,4 @@ module.exports = {
 - outputDir `boolean` generate chunks or not
 - exports `string` (default: `'named'`) `'import'`、`'named'` or `'default'`
 - camelCase `object` or `false` (optional) [see here](https://www.npmjs.com/package/camelcase)
+- dts `boolean` (optional) create an `index.d.ts` file
