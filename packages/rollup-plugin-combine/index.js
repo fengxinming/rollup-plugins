@@ -93,10 +93,11 @@ function createPlugin(opts) {
         let p;
         if (file) {
           p = parse(file).dir;
-        } else if (dir) {
-          p = dir
         }
-        if(p && !isAbsolute(p)) {
+        else if (dir) {
+          p = dir;
+        }
+        if (p && !isAbsolute(p)) {
           p = join(process.cwd(), p);
         }
         if (p && mainCode) {

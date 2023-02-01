@@ -1,12 +1,12 @@
 {
   "name": "rollup-plugin-combine",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "A rollup plugin for combining dynamic JavaScript files which can be compiled into a library or application.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "https://github.com/fengxinming/rollup-plugins/tree/master/packages/rollup-plugin-combine2.x",
+  "repository": "https://github.com/fengxinming/rollup-plugins/tree/master/packages/rollup-plugin-combine",
   "keywords": [
     "rollup",
     "plugin"
@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/fengxinming/rollup-plugins/issues"
   },
-  "homepage": "https://github.com/fengxinming/rollup-plugins/tree/master/packages/rollup-plugin-combine2.x#readme",
+  "homepage": "https://github.com/fengxinming/rollup-plugins/tree/master/packages/rollup-plugin-combine#readme",
   "directories": {
     "example": "example"
   },
