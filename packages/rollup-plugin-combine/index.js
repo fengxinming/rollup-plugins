@@ -101,7 +101,8 @@ function createPlugin(opts) {
           p = join(process.cwd(), p);
         }
         if (p && mainCode) {
-          writeFile(join(p, `${main.replace(/\.\w+$/, '')}.d.ts`), mainCode.replace(new RegExp(process.cwd(), 'g'), '.'), (err) => {
+          const mainObj = parse(main);
+          writeFile(join(p, `${mainObj.name}.d.ts`), mainCode.replace(new RegExp(join(process.cwd(), mainObj.dir), 'g'), '.'), (err) => {
             if (err) {
               console.error(err);
             }
